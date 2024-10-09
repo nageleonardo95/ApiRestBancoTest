@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using ApiRestBancoTest.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configura la conexión a la base de datos
 builder.Services.AddDbContext<BancoBDDContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -17,7 +17,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

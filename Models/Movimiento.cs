@@ -2,14 +2,17 @@
 
 namespace ApiRestBancoTest.Models
 {
-    public class Movimiento
+    public class Movimiento 
     {
-       public DateTime dtimeFecha { get; set; }
-       public string strTipoMovimiento { get; set; }
+       public DateTime Fecha { get; set; }
 
-       public int intValor { get; set; }
+       public int intCuentaId { get; set; }
 
-       public int intSaldo { get; set; }
+       public string TipoMovimiento { get; set; }
+
+       public decimal Valor { get; set; }
+
+       public decimal Saldo { get; set; }
 
        public int intMovimientoId { get;}
 

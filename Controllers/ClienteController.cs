@@ -1,6 +1,7 @@
 ﻿using ApiRestBancoTest.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ApiRestBancoTest.Data;
 
 namespace ApiRestBancoTest.Controllers
 {
@@ -26,14 +27,17 @@ namespace ApiRestBancoTest.Controllers
         {
             _context.Clientes.Add(cliente);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetClienteById), new { id = cliente.intClienteId }, cliente);
+            return CreatedAtAction(nameof(GetClienteById), new { id = cliente.intClienteId}, cliente);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetClienteById(int id)
         {
             var cliente = await _context.Clientes.FindAsync(id);
-            if (cliente == null) return NotFound();
+            if (cliente == null)
+            {
+                return NotFound(new { message = $"Cliente con ID: {id} no fue encontrado" });
+            }
             return Ok(cliente);
         }
 
@@ -43,14 +47,14 @@ namespace ApiRestBancoTest.Controllers
             var cliente = await _context.Clientes.FindAsync(id);
             if (cliente == null) return NotFound();
 
-            cliente.strNombre = updatedCliente.strNombre;
-            cliente.strGenero = updatedCliente.strGenero;
-            cliente.intEdad = updatedCliente.intEdad;
-            cliente.intIdentificacion = updatedCliente.intIdentificacion;
-            cliente.strDireccion = updatedCliente.strDireccion;
-            cliente.intelefono = updatedCliente.intelefono;
-            cliente.intContraseña = updatedCliente.intContraseña;
-            cliente.blEstado = updatedCliente.blEstado;
+            cliente.Nombres = updatedCliente.Nombres;
+            cliente.Genero = updatedCliente.Genero;
+            cliente.Edad = updatedCliente.Edad;
+            cliente.Identificacion = updatedCliente.Identificacion;
+            cliente.Direccion = updatedCliente.Direccion;
+            cliente.Telefono = updatedCliente.Telefono;
+            cliente.Contrasena = updatedCliente.Contrasena;
+            cliente.Estado = updatedCliente.Estado;
 
             await _context.SaveChangesAsync();
             return NoContent();

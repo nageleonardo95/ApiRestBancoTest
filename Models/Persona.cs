@@ -4,12 +4,12 @@ namespace ApiRestBancoTest.Models
 {
     public class Persona 
     {
-        public string strNombre { get; set; }
-        public string strGenero { get; set; }
-        public int intEdad { get; set; }
-        public int  intIdentificacion { get; set;}
-        public string strDireccion { get; set; }
-        public int intelefono { get; set;}
+        public string Nombres { get; set; }
+        public string? Genero { get; set; }
+        public int? Edad { get; set; }
+        public int?  Identificacion { get; set;}
+        public string Direccion { get; set; }
+        public string? Telefono { get; set;}
 
     }
 }

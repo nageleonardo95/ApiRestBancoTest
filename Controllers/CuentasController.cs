@@ -1,6 +1,8 @@
 ﻿using ApiRestBancoTest.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ApiRestBancoTest.Data;
+
 
 namespace ApiRestBancoTest.Controllers
 {
@@ -43,10 +45,10 @@ namespace ApiRestBancoTest.Controllers
             var cuenta = await _context.Cuentas.FindAsync(id);
             if (cuenta == null) return NotFound();
 
-            cuenta.intNumeroCuenta = updatedCuenta.intNumeroCuenta;
-            cuenta.strTipoCuenta = updatedCuenta.strTipoCuenta;
-            cuenta.intSaldoInicial = updatedCuenta.intSaldoInicial;
-            cuenta.blEstadoCuenta = updatedCuenta.blEstadoCuenta;
+            cuenta.NumeroCuenta = updatedCuenta.NumeroCuenta;
+            cuenta.TipoCuenta = updatedCuenta.TipoCuenta;
+            cuenta.SaldoInicial = updatedCuenta.SaldoInicial;
+            cuenta.EstadoCuenta = updatedCuenta.EstadoCuenta;
 
             await _context.SaveChangesAsync();
             return NoContent();

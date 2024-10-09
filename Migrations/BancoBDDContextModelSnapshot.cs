@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using ApiRestBancoTest.Data;
 
 #nullable disable
 
@@ -16,10 +17,10 @@ namespace ApiRestBancoTest.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.20")
+                .HasAnnotation("ProductVersion", "6.0.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("ApiRestBancoTest.Models.Cliente", b =>
                 {
@@ -27,7 +28,7 @@ namespace ApiRestBancoTest.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("intClienteId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("intClienteId"), 1L, 1);
 
                     b.Property<bool>("blEstado")
                         .HasColumnType("bit");
@@ -48,6 +49,10 @@ namespace ApiRestBancoTest.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("strGenero")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("strNombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -63,7 +68,7 @@ namespace ApiRestBancoTest.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("intCuentaId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("intCuentaId"), 1L, 1);
 
                     b.Property<bool>("blEstadoCuenta")
                         .HasColumnType("bit");
@@ -89,7 +94,7 @@ namespace ApiRestBancoTest.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("intMovimientoId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("intMovimientoId"), 1L, 1);
 
                     b.Property<DateTime>("dtimeFecha")
                         .HasColumnType("datetime2");
