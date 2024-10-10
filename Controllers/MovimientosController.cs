@@ -19,7 +19,7 @@ namespace ApiRestBancoTest.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<MovimientoId>> CreateMovimiento([FromBody] MovimientoId movimiento)
+        public async Task<ActionResult<dtoMovimientoId>> CreateMovimiento([FromBody] dtoMovimientoId movimiento)
         {
             try
             {
@@ -58,7 +58,12 @@ namespace ApiRestBancoTest.Controllers
                 _context.Cuentas.Update(cuenta);
                 _context.Movimientos.Add(movimiento_remap);
                 await _context.SaveChangesAsync();
-                return CreatedAtAction(nameof(GetMovimientoById), new { id = movimiento.intMovimientoId }, movimiento);
+                return Ok(new
+                {
+                    status = $"200",
+                    message = $"Transaccion exitos, numero de transaccion: {movimiento_remap.intMovimientoId}, tipo: {movimiento.TipoMovimiento}, valor: {movimiento.Valor}. Saldo: {movimiento_remap.Saldo} ",
+                });
+
             }
             catch (Exception ex)
             {
@@ -140,7 +145,7 @@ namespace ApiRestBancoTest.Controllers
                 return Ok(new
                 {
                     status = $"Reporte de cliente {cliente_nombre}",
-                    message = "Movimientos encontrados.",
+                    message = "Movimientos encontrados",
                     data = movimientosAgrupados
                 });
             }

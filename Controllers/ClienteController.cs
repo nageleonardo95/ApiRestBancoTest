@@ -23,11 +23,35 @@ namespace ApiRestBancoTest.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Cliente>> CreateCliente([FromBody] Cliente cliente)
+        public async Task<ActionResult<Cliente>> CreateCliente([FromBody] dtoClienteIn dtoClienteIn)
         {
-            _context.Clientes.Add(cliente);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetClienteById), new { id = cliente.intClienteId}, cliente);
+            try { 
+                var cliente = new Cliente
+                {
+                    Nombres = dtoClienteIn.Nombres,
+                    Genero = dtoClienteIn.Genero,
+                    Edad = dtoClienteIn.Edad,
+                    Identificacion = dtoClienteIn.Identificacion,
+                    Direccion = dtoClienteIn.Direccion,
+                    Contrasena = dtoClienteIn.Contrasena,
+                    Telefono = dtoClienteIn.Telefono,
+                    Estado = true
+                };
+                _context.Clientes.Add(cliente);
+                await _context.SaveChangesAsync();
+
+                //return CreatedAtAction(nameof(GetClienteById), new { id = cliente.intClienteId}, cliente);
+
+                return Ok(new
+                {
+                    status = "200",
+                    message = $"Ingreso de cliente exitoso: {cliente.intClienteId}",
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error al ingresar datos", details = ex.Message });
+            }
         }
 
         [HttpGet("{id}")]
@@ -64,11 +88,18 @@ namespace ApiRestBancoTest.Controllers
         public async Task<IActionResult> DeleteCliente(int id)
         {
             var cliente = await _context.Clientes.FindAsync(id);
-            if (cliente == null) return NotFound();
+            if (cliente == null)
+            {
+                return NotFound(new { message = $"Cliente con ID: {id} no fue encontrado" });
+            }
 
             _context.Clientes.Remove(cliente);
             await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok(new
+            {
+                status = "200",
+                message = $"Se borro con exito el clinete con id: {id}",
+            });
         }
     }
 }

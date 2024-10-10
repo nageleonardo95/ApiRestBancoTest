@@ -6,7 +6,7 @@ namespace ApiRestBancoTest.Util
 {
     public class ControlesExtraUtil 
     {
-        public static string Control_Data(MovimientoId movimiento)
+        public static string Control_Data(dtoMovimientoId movimiento)
         {
             string result = string.Empty;
 
@@ -42,6 +42,17 @@ namespace ApiRestBancoTest.Util
                 result = "El formato de las fechas es incorrecto. Use el formato 'YYYY-MM-DD'";
             }
 
+            return result;
+        }
+
+        public static string Control_Data_Cuenta_Generar(dtoCuentaIn dtoCuentaIn)
+        {
+            string result = string.Empty;
+
+            if (!(dtoCuentaIn.TipoCuenta == "Ahorro" || dtoCuentaIn.TipoCuenta == "Corriente"))
+            {
+                result = "Error de parámetros: 'TipoCuenta' debe ser 'Ahorro' o 'Corriente'";
+            }
             return result;
         }
     }

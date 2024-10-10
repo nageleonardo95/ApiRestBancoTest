@@ -1,6 +1,6 @@
 ﻿namespace ApiRestBancoTest.Models
 {
-    public class MovimientoId 
+    public class dtoMovimientoId 
     {
         public string TipoMovimiento { get; set; }
 

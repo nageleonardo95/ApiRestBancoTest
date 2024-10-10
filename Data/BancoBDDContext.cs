@@ -1,10 +1,8 @@
 ﻿using ApiRestBancoTest.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiRestBancoTest.Data
 {
-
     public class BancoBDDContext : DbContext
     {
         public BancoBDDContext(DbContextOptions<BancoBDDContext> options) : base(options) { }
@@ -17,10 +15,33 @@ namespace ApiRestBancoTest.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Map las entidades 
+            modelBuilder.Entity<Cliente>().ToTable("Clientes");
+            modelBuilder.Entity<Cuenta>().ToTable("Cuentas");
+            modelBuilder.Entity<Movimiento>().ToTable("Movimientos");
+
+            // Configurar las PK
             modelBuilder.Entity<Cliente>().HasKey(c => c.intClienteId);
             modelBuilder.Entity<Cuenta>().HasKey(c => c.intCuentaId);
-            modelBuilder.Entity<Movimiento>().HasKey(c => c.intMovimientoId);
+            modelBuilder.Entity<Movimiento>().HasKey(m => m.intMovimientoId);
+
+            // Configurar relacion
+            modelBuilder.Entity<Cuenta>()
+                .HasOne(c => c.Cliente)
+                .WithMany()
+                .HasForeignKey(c => c.intClienteId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Movimiento>()
+                .HasOne(m => m.Cuenta)
+                .WithMany()
+                .HasForeignKey(m => m.intCuentaId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
         }
+
     }
 }
+
 
